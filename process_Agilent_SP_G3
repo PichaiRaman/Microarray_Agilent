@@ -5,11 +5,18 @@
 #3/21/16
 ##########################################
 
+
+#This is to pass arguments to R
+options(echo=TRUE) # if you want see commands in output file
+args <- commandArgs(trailingOnly = TRUE)
+print(args)
+
+
 #call libraries
 library(limma);
 
 #read data files
-x <- read.maimages(files=dir(), source="agilent",green.only=TRUE);
+x <- read.maimages(files=args[1], source="agilent",green.only=TRUE);
 
 #subtract background
 y <- backgroundCorrect(x, method="normexp", offset=16)
@@ -28,7 +35,7 @@ dataExp <- dataExp[-1:-5];
 numCol <- ncol(dataExp);
 
 #Get Annotation
-annot <- read.delim("/reference/microarray/agilentSurePrintG3/GPL14550-9757.txt");
+annot <- read.delim(args[2]);
 rownames(annot) <- annot[,1];
 
 #Update with gene names instead of probes 
@@ -60,8 +67,8 @@ colnames(dataExp) <- gsub(".CEL", "", colnames(dataExp));
 colnames(zDataExp) <- gsub(".CEL", "", colnames(zDataExp));
 
 
-expFileName <- paste("PPTP_Agilent", "_Exprs.txt", sep="");
-zExpFileName <- paste("PPTP_Agilent", "_Z_Scores.txt", sep="");
+expFileName <- paste(args[3], "_Exprs.txt", sep="");
+zExpFileName <- paste(args[3], "_Z_Scores.txt", sep="");
 
 write.table(dataExp, expFileName, sep="\t", row.names=F);
 write.table(zDataExp, zExpFileName, sep="\t", row.names=F);
