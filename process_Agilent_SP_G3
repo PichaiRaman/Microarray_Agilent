@@ -9,7 +9,7 @@
 library(limma);
 
 #read data files
-x <- read.maimages(files=dir()[1:10], source="agilent",green.only=TRUE);
+x <- read.maimages(files=dir(), source="agilent",green.only=TRUE);
 
 #subtract background
 y <- backgroundCorrect(x, method="normexp", offset=16)
