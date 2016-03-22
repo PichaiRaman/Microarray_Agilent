@@ -15,8 +15,13 @@ print(args)
 #call libraries
 library(limma);
 
+curDir <- getwd(); 
+celDir = args[1];
+setwd(celDir);
+
+
 #read data files
-x <- read.maimages(files=args[1], source="agilent",green.only=TRUE);
+x <- read.maimages(files=list.files(), source="agilent",green.only=TRUE);
 
 #subtract background
 y <- backgroundCorrect(x, method="normexp", offset=16)
