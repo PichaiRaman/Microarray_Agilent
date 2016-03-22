@@ -3,6 +3,8 @@
 #
 #Pichai Raman
 #3/21/16
+#
+#http://matticklab.com/index.php?title=Single_channel_analysis_of_Agilent_microarray_data_with_Limma
 ##########################################
 
 
