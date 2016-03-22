@@ -1,0 +1,25 @@
+##########################################
+#Code to process agilent S3 G3 data
+#
+#Pichai Raman
+#3/21/16
+##########################################
+
+#call libraries
+library(limma);
+
+#read data files
+x <- read.maimages(files=dir()[1:10], source="agilent",green.only=TRUE);
+
+#subtract background
+y <- backgroundCorrect(x, method="normexp", offset=16)
+
+#Normalize between arrays
+y <- normalizeBetweenArrays(y, method="quantile")
+
+#Average spots
+y.ave <- avereps(y, ID=y$genes$ProbeName)
+
+#Create data frame
+dataExp <- data.frame(y.ave$genes, y.ave$E);
+dataExp <- dataExp[dataExp[,"ControlType"]==0,];
